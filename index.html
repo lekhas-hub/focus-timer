@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Focus Timer</title>
+    <style>
+        body {
+            text-align: center;
+            font-family: Arial;
+            background: #f0f4f8;
+        }
+
+        h1 {
+            margin-top: 30px;
+        }
+
+        #timer {
+            font-size: 50px;
+            margin: 20px;
+        }
+
+        button {
+            padding: 10px 20px;
+            margin: 5px;
+            font-size: 16px;
+        }
+
+        .card {
+            background: white;
+            padding: 15px;
+            margin: 20px auto;
+            width: 250px;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Focus Timer</h1>
+
+    <div id="timer">25:00</div>
+
+    <button onclick="startTimer()">Start</button>
+    <button onclick="resetTimer()">Reset</button>
+
+    <div class="card">
+        <h3>Sessions Completed</h3>
+        <p id="sessions">0</p>
+    </div>
+
+    <script>
+        let time = 1500; // 25 minutes
+        let timerRunning = false;
+        let sessions = 0;
+        let interval;
+
+        function startTimer() {
+            if (timerRunning) return;
+
+            timerRunning = true;
+
+            interval = setInterval(() => {
+                if (time <= 0) {
+                    clearInterval(interval);
+                    timerRunning = false;
+                    sessions++;
+                    document.getElementById("sessions").innerText = sessions;
+                    alert("Session complete!");
+                    return;
+                }
+
+                time--;
+
+                let minutes = Math.floor(time / 60);
+                let seconds = time % 60;
+
+                document.getElementById("timer").innerText =
+                    (minutes < 10 ? "0" : "") + minutes + ":" +
+                    (seconds < 10 ? "0" : "") + seconds;
+
+            }, 1000);
+        }
+
+        function resetTimer() {
+            clearInterval(interval);
+            time = 1500;
+            timerRunning = false;
+            document.getElementById("timer").innerText = "25:00";
+        }
+    </script>
+
+</body>
+</html>
